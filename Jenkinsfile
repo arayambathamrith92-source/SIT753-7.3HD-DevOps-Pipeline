@@ -5,12 +5,17 @@ pipeline {
 
         stage('Build') {
             steps {
-                echo 'Starting Node.js build...'
+                echo '========================================'
+                echo 'BUILD STAGE'
+                echo '========================================'
 
                 bat 'node --version'
                 bat 'npm --version'
 
+                echo 'Installing project dependencies...'
                 bat 'npm ci'
+
+                echo 'Building the Node.js application...'
                 bat 'npm run build'
 
                 echo 'Build completed successfully.'
@@ -19,11 +24,15 @@ pipeline {
 
         stage('Test') {
             steps {
-                echo 'Running automated tests...'
+                echo '========================================'
+                echo 'TEST STAGE'
+                echo '========================================'
 
-                bat 'npm test'
+                echo 'Running automated application tests...'
 
-                echo 'Tests completed successfully.'
+                bat 'npx mocha "tests/**/*.spec.js"'
+
+                echo 'Automated tests completed successfully.'
             }
         }
     }
